@@ -119,6 +119,38 @@ button:focus-visible{outline:2px solid #c8102e;outline-offset:-3px}
 </style>
 
 <style>.pr-ico-play{display:none}.is-paused .pr-ico-pause{display:none}.is-paused .pr-ico-play{display:inline}</style>
+<style>
+/* reservations */
+#reserve{scroll-margin-top:0}
+.pr-menu li:nth-child(7){transition-delay:.46s}
+.pr-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 20px}
+.pr-f{display:flex;flex-direction:column;gap:8px;min-width:0}
+.pr-f.full{grid-column:1/-1}
+.pr-f label,.pr-f legend,.pr-lab{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#56668c}
+.pr-f .opt{font-weight:500;letter-spacing:.08em;text-transform:none;color:#8a95b0}
+.pr-in{box-sizing:border-box;width:100%;min-height:52px;padding:12px 14px;border:1px solid #b9c3da;border-radius:0;background:#ffffff;color:#0d2866;font-family:inherit;font-size:17px;line-height:1.4;transition:border-color .3s}
+.pr-in:hover{border-color:#0d2866}
+.pr-in:focus{outline:2px solid #c8102e;outline-offset:-1px;border-color:#0d2866}
+select.pr-in{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none' stroke='%230d2866' stroke-width='1.5'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
+textarea.pr-in{min-height:110px;resize:vertical}
+.pr-in:user-invalid{border-color:#c8102e}
+fieldset.pr-f{border:0;margin:0;padding:0}
+.pr-chks{display:flex;flex-wrap:wrap;gap:10px}
+.pr-chk{position:relative;display:inline-flex}
+.pr-chk input{position:absolute;opacity:0;width:1px;height:1px}
+.pr-chk span{min-height:44px;display:inline-flex;align-items:center;gap:10px;padding:0 18px;border:1px solid #b9c3da;cursor:pointer;transition:background .3s,color .3s,border-color .3s}
+.pr-chk span::before{content:"";width:10px;height:10px;border:1px solid currentColor;border-radius:50%;box-sizing:border-box;transition:background .3s}
+.pr-chk input:checked+span{background:#0d2866;border-color:#0d2866;color:#ffffff}
+.pr-chk input:checked+span::before{background:#c8102e;border-color:#c8102e}
+.pr-chk input:focus-visible+span{outline:2px solid #c8102e;outline-offset:2px}
+.pr-sum{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;padding:18px 0;border-top:1px solid #0d2866;border-bottom:1px solid #0d2866}
+.pr-sum b{font-family:'Newsreader',Georgia,serif;font-weight:400;font-size:30px;line-height:1.1}
+.pr-acts{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:14px}
+.pr-acts button{border:0;font-family:inherit;cursor:pointer;min-height:52px;display:inline-flex;align-items:center;gap:10px;padding:0 28px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.pr-err{grid-column:1/-1;margin:0;color:#c8102e;font-size:15px}
+.pr-err:empty{display:none}
+@media (max-width:560px){.pr-form{grid-template-columns:minmax(0,1fr)}.pr-acts button{width:100%;justify-content:center}}
+</style>
 </head>
 <body>
 
@@ -147,7 +179,8 @@ button:focus-visible{outline:2px solid #c8102e;outline-offset:-3px}
 <li><a class="pr-mlink" href="#extras" data-on="closeMenu" style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid #2c3f6b"><span class="pr-mn" style="font-family: 'Newsreader', Georgia, serif; font-size: 18px; color: #b9c3da">03</span><span><span class="pr-mt" style="display: block; font-family: 'Newsreader', Georgia, serif; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1">The extras</span><span style="display: block; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #b9c3da; margin-top: 6px">Office, lift, gym and pool</span></span></a></li>
 <li><a class="pr-mlink" href="#included" data-on="closeMenu" style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid #2c3f6b"><span class="pr-mn" style="font-family: 'Newsreader', Georgia, serif; font-size: 18px; color: #b9c3da">04</span><span><span class="pr-mt" style="display: block; font-family: 'Newsreader', Georgia, serif; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1">What's included</span><span style="display: block; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #b9c3da; margin-top: 6px">In every villa, on every stay</span></span></a></li>
 <li><a class="pr-mlink" href="#prices" data-on="closeMenu" style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid #2c3f6b"><span class="pr-mn" style="font-family: 'Newsreader', Georgia, serif; font-size: 18px; color: #b9c3da">05</span><span><span class="pr-mt" style="display: block; font-family: 'Newsreader', Georgia, serif; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1">Rates &amp; booking</span><span style="display: block; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #b9c3da; margin-top: 6px">Tailored to your stay, ask for a quote</span></span></a></li>
-<li><a class="pr-mlink" href="#find-us" data-on="closeMenu" style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid #2c3f6b"><span class="pr-mn" style="font-family: 'Newsreader', Georgia, serif; font-size: 18px; color: #b9c3da">06</span><span><span class="pr-mt" style="display: block; font-family: 'Newsreader', Georgia, serif; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1">Find us</span><span style="display: block; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #b9c3da; margin-top: 6px">Plot 214, Oduduwa Crescent, Ikeja G.R.A.</span></span></a></li>
+<li><a class="pr-mlink" href="#reserve" data-on="closeMenu" style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid #2c3f6b"><span class="pr-mn" style="font-family: 'Newsreader', Georgia, serif; font-size: 18px; color: #b9c3da">06</span><span><span class="pr-mt" style="display: block; font-family: 'Newsreader', Georgia, serif; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1">Reservations</span><span style="display: block; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #b9c3da; margin-top: 6px">Check your dates, request a stay</span></span></a></li>
+<li><a class="pr-mlink" href="#find-us" data-on="closeMenu" style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid #2c3f6b"><span class="pr-mn" style="font-family: 'Newsreader', Georgia, serif; font-size: 18px; color: #b9c3da">07</span><span><span class="pr-mt" style="display: block; font-family: 'Newsreader', Georgia, serif; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1">Find us</span><span style="display: block; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #b9c3da; margin-top: 6px">Plot 214, Oduduwa Crescent, Ikeja G.R.A.</span></span></a></li>
 </ol>
 <div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
 <div style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #b9c3da">Come and stay</div>
@@ -176,7 +209,7 @@ button:focus-visible{outline:2px solid #c8102e;outline-offset:-3px}
 <a class="pr-ul pr-hide-sm" href="#find-us" style="min-height: 44px; display: inline-flex; align-items: center">Find us</a>
 <a href="Pristine-Residences-Brochure.pdf" target="_blank" rel="noopener" class="pr-ul pr-dl pr-hide-sm" data-on="download" style="min-height: 44px; display: inline-flex; align-items: center; gap: 8px; color: #c8102e"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M4.5 7 8 10.5 11.5 7M2.5 13.5h11"></path></svg>Brochure</a>
 <button type="button" class="pr-idx" data-on="openMenu" aria-expanded="false" aria-label="Open the site index" style="min-height: 44px; display: inline-flex; align-items: center; gap: 10px; border: 0; background: transparent; color: inherit; font-family: inherit; font-size: inherit; font-weight: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; padding: 0"><span class="pr-ham" aria-hidden="true"></span>Index</button>
-<a class="pr-fill" href="https://wa.me/2348033849365" target="_blank" rel="noopener" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 22px; background: #0d2866; color: #ffffff">Check dates</a>
+<a class="pr-fill" href="#reserve" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 22px; background: #0d2866; color: #ffffff">Check dates</a>
 </nav>
 </div>
 </header>
@@ -219,7 +252,7 @@ button:focus-visible{outline:2px solid #c8102e;outline-offset:-3px}
 <div class="pr-line" aria-hidden="true"><i></i></div>
 <p class="pr-hi pr-d2" style="margin: 0; max-width: 34em">Eleven four-bedroom villas, fully furnished and fully serviced. You arrive to a home that's already running: power on, Wi-Fi up, beds made.</p>
 <div class="pr-hi pr-d3" style="display: flex; flex-wrap: wrap; gap: 14px; align-items: center">
-<a class="pr-fill" href="https://wa.me/2348033849365" target="_blank" rel="noopener" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 28px; background: #0d2866; color: #ffffff; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Check your dates</a>
+<a class="pr-fill" href="#reserve" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 28px; background: #0d2866; color: #ffffff; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Check your dates</a>
 <a class="pr-fill pr-fill-o pr-dl" href="Pristine-Residences-Brochure.pdf" target="_blank" rel="noopener" data-on="download" style="min-height: 52px; display: inline-flex; align-items: center; gap: 10px; padding: 0 24px; border: 1px solid #0d2866; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M4.5 7 8 10.5 11.5 7M2.5 13.5h11"></path></svg>Download the brochure</a>
 </div>
 <div class="pr-hi pr-d4" style="display: flex; align-items: center; gap: 18px">
@@ -444,6 +477,41 @@ button:focus-visible{outline:2px solid #c8102e;outline-offset:-3px}
 </div>
 </section>
 
+<!-- RESERVATIONS -->
+<section id="reserve" aria-labelledby="reserve-h" style="background: #ffffff; border-bottom: 1px solid #d9dceb">
+<div style="max-width: 1280px; margin: 0 auto; padding: clamp(56px, 8vw, 112px) clamp(20px, 5vw, 80px); display: flex; flex-wrap: wrap; gap: 48px 96px">
+<div style="flex: 1 1 340px; min-width: 0">
+<div class="pr-rv" style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #c8102e; margin-bottom: 16px">Reservations</div>
+<h2 id="reserve-h" class="pr-rv" style="margin: 0 0 24px; font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: clamp(36px, 4.2vw, 56px); line-height: 1.06; letter-spacing: -0.01em">Check your dates.</h2>
+<p class="pr-rv" style="margin: 0 0 28px; max-width: 30em">Tell us when you'd like to stay and how many of you there are. We'll confirm availability and send you a quote.</p>
+<p class="pr-rv" style="margin: 0; max-width: 30em; font-size: 15px; color: #56668c">Your request opens in WhatsApp or your email app, ready to send. Nothing is booked until we confirm and you pay the deposit.</p>
+</div>
+
+<form class="pr-form pr-rv" id="pr-book" novalidate style="flex: 1.4 1 480px; min-width: 0">
+<div class="pr-f"><label for="pr-in">Check-in</label><input class="pr-in" type="date" id="pr-in" name="checkin" required></div>
+<div class="pr-f"><label for="pr-out">Check-out</label><input class="pr-in" type="date" id="pr-out" name="checkout" required></div>
+<div class="pr-f"><label for="pr-villas">Villas</label><select class="pr-in" id="pr-villas" name="villas"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option></select></div>
+<div class="pr-f"><label for="pr-guests">Guests</label><input class="pr-in" type="number" id="pr-guests" name="guests" min="1" max="99" value="2" inputmode="numeric" required></div>
+<fieldset class="pr-f full"><legend style="margin-bottom: 8px">Extras <span class="opt">(optional)</span></legend>
+<div class="pr-chks">
+<label class="pr-chk"><input type="checkbox" name="extras" value="Private cook"><span>Private cook</span></label>
+<label class="pr-chk"><input type="checkbox" name="extras" value="Catering"><span>Catering</span></label>
+</div>
+</fieldset>
+<div class="pr-f"><label for="pr-name">Full name</label><input class="pr-in" type="text" id="pr-name" name="name" autocomplete="name" required></div>
+<div class="pr-f"><label for="pr-phone">Phone</label><input class="pr-in" type="tel" id="pr-phone" name="phone" autocomplete="tel" required></div>
+<div class="pr-f full"><label for="pr-email">Email <span class="opt">(optional)</span></label><input class="pr-in" type="email" id="pr-email" name="email" autocomplete="email"></div>
+<div class="pr-f full"><label for="pr-note">Anything else? <span class="opt">(optional)</span></label><textarea class="pr-in" id="pr-note" name="note" rows="3" placeholder="Arrival time, reason for your stay, special requests"></textarea></div>
+<div class="pr-sum" aria-live="polite"><span class="pr-lab">Your stay</span><b id="pr-sum">Choose your dates</b></div>
+<p class="pr-err" id="pr-err" role="alert"></p>
+<div class="pr-acts">
+<button type="submit" value="wa" class="pr-fill" style="background: #0d2866; color: #ffffff"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>Send on WhatsApp</button>
+<button type="submit" value="email" class="pr-fill pr-fill-o" style="background: transparent; color: #0d2866; box-shadow: inset 0 0 0 1px #0d2866">Send by email</button>
+</div>
+</form>
+</div>
+</section>
+
 <!-- FIND US + CONTACT -->
 <section style="display: flex; flex-wrap: wrap">
 <div id="find-us" style="flex: 1 1 440px; min-width: 0; box-sizing: border-box; padding: clamp(56px, 7vw, 104px) clamp(20px, 5vw, 80px); display: flex; flex-direction: column; gap: 20px">
@@ -585,6 +653,71 @@ button:focus-visible{outline:2px solid #c8102e;outline-offset:-3px}
   veil.classList.add('on'); veilOn = true;
   setupMotion();
   setTimeout(function () { veil.classList.add('off'); veilOn = false; elapsed = 0; root.classList.add('pr-go'); }, 1900);
+})();
+</script>
+<script>
+/* reservations form: builds a request and opens WhatsApp or email */
+(function () {
+  var f = document.getElementById('pr-book'); if (!f) return;
+  var PHONE = '2348033849365', EMAIL = 'pristineresidencesikeja@gmail.com';
+  var ci = f.checkin, co = f.checkout, sum = document.getElementById('pr-sum'), err = document.getElementById('pr-err');
+  function iso(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function parse(v) { if (!v) return null; var p = v.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+  function nice(d) { try { return d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }); } catch (e) { return iso(d); } }
+  function addDays(d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; }
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  ci.min = iso(today); co.min = iso(addDays(today, 1));
+  function nights() { var a = parse(ci.value), b = parse(co.value); return a && b ? Math.round((b - a) / 864e5) : 0; }
+  function update() {
+    var a = parse(ci.value);
+    if (a) { co.min = iso(addDays(a, 1)); if (co.value && parse(co.value) <= a) co.value = ''; }
+    var n = nights();
+    sum.textContent = n > 0 ? n + (n === 1 ? ' night' : ' nights') + ' · ' + nice(parse(ci.value)) + ' to ' + nice(parse(co.value)) : 'Choose your dates';
+    if (err.textContent) check(false);
+  }
+  ci.addEventListener('change', update); co.addEventListener('change', update);
+  ci.addEventListener('change', function () { if (ci.value && !co.value) { try { co.focus(); } catch (e) {} } });
+  function check(focus) {
+    var msg = '', bad = null, a = parse(ci.value);
+    if (!ci.value) { msg = 'Please choose a check-in date.'; bad = ci; }
+    else if (a < today) { msg = 'Check-in can’t be in the past.'; bad = ci; }
+    else if (!co.value) { msg = 'Please choose a check-out date.'; bad = co; }
+    else if (nights() < 1) { msg = 'Check-out must be after check-in.'; bad = co; }
+    else if (!(+f.guests.value >= 1)) { msg = 'Please enter the number of guests.'; bad = f.guests; }
+    else if (!f.name.value.trim()) { msg = 'Please enter your name.'; bad = f.name; }
+    else if (f.phone.value.replace(/\D/g, '').length < 7) { msg = 'Please enter a phone number we can reach you on.'; bad = f.phone; }
+    else if (f.email.value && !f.email.checkValidity()) { msg = 'That email address doesn’t look right.'; bad = f.email; }
+    err.textContent = msg;
+    if (bad && focus) { try { bad.focus(); } catch (e) {} }
+    return !msg;
+  }
+  f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!check(true)) return;
+    var via = (e.submitter && e.submitter.value) || 'wa', n = nights();
+    var extras = [].slice.call(f.querySelectorAll('input[name="extras"]:checked')).map(function (x) { return x.value; });
+    var lines = [
+      'Hello Pristine Residences, I’d like to check availability.',
+      '',
+      'Check-in: ' + nice(parse(ci.value)),
+      'Check-out: ' + nice(parse(co.value)) + ' (' + n + (n === 1 ? ' night' : ' nights') + ')',
+      'Villas: ' + f.villas.value,
+      'Guests: ' + f.guests.value,
+      'Extras: ' + (extras.length ? extras.join(', ') : 'None'),
+      '',
+      'Name: ' + f.name.value.trim(),
+      'Phone: ' + f.phone.value.trim()
+    ];
+    if (f.email.value.trim()) lines.push('Email: ' + f.email.value.trim());
+    if (f.note.value.trim()) lines.push('', 'Notes: ' + f.note.value.trim());
+    var body = lines.join('\n');
+    if (via === 'email') {
+      window.location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Reservation request: ' + nice(parse(ci.value)) + ', ' + n + (n === 1 ? ' night' : ' nights')) + '&body=' + encodeURIComponent(body);
+    } else {
+      var win = window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(body), '_blank', 'noopener');
+      if (!win) window.location.href = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(body);
+    }
+  });
 })();
 </script>
 </body>
