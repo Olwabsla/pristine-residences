@@ -149,6 +149,8 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 .pr-acts button{border:0;font-family:inherit;cursor:pointer;min-height:52px;display:inline-flex;align-items:center;gap:10px;padding:0 28px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600}
 .pr-err{grid-column:1/-1;margin:0;color:#c8102e;font-size:15px}
 .pr-err:empty{display:none}
+.pr-form[hidden],#pr-done[hidden]{display:none!important}
+#pr-send[disabled]{opacity:.6;cursor:progress}
 @media (max-width:560px){.pr-form{grid-template-columns:minmax(0,1fr)}.pr-acts button{width:100%;justify-content:center}}
 </style>
 </head>
@@ -484,7 +486,7 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 <div class="pr-rv" style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #c8102e; margin-bottom: 16px">Reservations</div>
 <h2 id="reserve-h" class="pr-rv" style="margin: 0 0 24px; font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: clamp(36px, 4.2vw, 56px); line-height: 1.06; letter-spacing: -0.01em">Check your dates.</h2>
 <p class="pr-rv" style="margin: 0 0 28px; max-width: 30em">Tell us when you'd like to stay and how many of you there are. We'll confirm availability and send you a quote.</p>
-<p class="pr-rv" style="margin: 0; max-width: 30em; font-size: 15px; color: #56668c">Your request opens in WhatsApp or your email app, ready to send. Nothing is booked until we confirm and you pay the deposit.</p>
+<p class="pr-rv" style="margin: 0; max-width: 30em; font-size: 15px; color: #56668c">Send your request here and we'll get back to you by phone or email. Your villa is secured once we confirm and you pay the deposit.</p>
 </div>
 
 <form class="pr-form pr-rv" id="pr-book" novalidate style="flex: 1.4 1 480px; min-width: 0">
@@ -492,7 +494,7 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 <div class="pr-f"><label for="pr-out">Check-out</label><input class="pr-in" type="date" id="pr-out" name="checkout" required></div>
 <div class="pr-f"><label for="pr-villas">Villas</label><select class="pr-in" id="pr-villas" name="villas"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option><option>11</option></select></div>
 <div class="pr-f"><label for="pr-guests">Guests</label><input class="pr-in" type="number" id="pr-guests" name="guests" min="1" max="99" value="2" inputmode="numeric" required></div>
-<fieldset class="pr-f full"><legend style="margin-bottom: 8px">Extras <span class="opt">(optional)</span></legend>
+<fieldset class="pr-f full"><legend style="margin-bottom: 8px; padding: 0">Extras <span class="opt">(optional)</span></legend>
 <div class="pr-chks">
 <label class="pr-chk"><input type="checkbox" name="extras" value="Private cook"><span>Private cook</span></label>
 <label class="pr-chk"><input type="checkbox" name="extras" value="Catering"><span>Catering</span></label>
@@ -504,11 +506,19 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 <div class="pr-f full"><label for="pr-note">Anything else? <span class="opt">(optional)</span></label><textarea class="pr-in" id="pr-note" name="note" rows="3" placeholder="Arrival time, reason for your stay, special requests"></textarea></div>
 <div class="pr-sum" aria-live="polite"><span class="pr-lab">Your stay</span><b id="pr-sum">Choose your dates</b></div>
 <p class="pr-err" id="pr-err" role="alert"></p>
+<input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0">
 <div class="pr-acts">
-<button type="submit" value="wa" class="pr-fill" style="background: #0d2866; color: #ffffff"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>Send on WhatsApp</button>
-<button type="submit" value="email" class="pr-fill pr-fill-o" style="background: transparent; color: #0d2866; box-shadow: inset 0 0 0 1px #0d2866">Send by email</button>
+<button type="submit" id="pr-send" class="pr-fill" style="background: #0d2866; color: #ffffff">Request booking</button>
 </div>
 </form>
+
+<div id="pr-done" role="status" tabindex="-1" hidden style="flex: 1.4 1 480px; min-width: 0; box-sizing: border-box; background: #0b1f47; color: #f3eee5; padding: clamp(32px, 4vw, 56px); display: flex; flex-direction: column; gap: 18px; outline: none">
+<div style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #ff6b74">Request received</div>
+<div style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.1">Thank you<span id="pr-done-name"></span>.</div>
+<p style="margin: 0; max-width: 30em">We've received your request for <b id="pr-done-stay" style="font-weight: 600"></b>. We'll confirm availability and your quote by phone or email.</p>
+<p style="margin: 0; font-size: 15px; color: #b9c3da">Need us sooner? Call or WhatsApp <a href="https://wa.me/2348033849365" target="_blank" rel="noopener" style="white-space: nowrap; text-decoration: underline; text-underline-offset: 4px">+234 803 384 9365</a>.</p>
+<button type="button" id="pr-again" class="pr-ul" style="align-self: flex-start; min-height: 44px; border: 0; background: transparent; color: #f3eee5; font-family: inherit; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; cursor: pointer; padding: 0">Make another request</button>
+</div>
 </div>
 </section>
 
@@ -691,10 +701,15 @@ fieldset.pr-f{border:0;margin:0;padding:0}
     if (bad && focus) { try { bad.focus(); } catch (e) {} }
     return !msg;
   }
+  /* Web3Forms access key: requests are emailed to the address it was created for. */
+  var ACCESS_KEY = 'PASTE_WEB3FORMS_ACCESS_KEY_HERE';
+  var send = document.getElementById('pr-send'), done = document.getElementById('pr-done');
+  var FALLBACK = ' Please try again, or call or WhatsApp +234 803 384 9365.';
   f.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!check(true)) return;
-    var via = (e.submitter && e.submitter.value) || 'wa', n = nights();
+    if (f.botcheck.checked) return;
+    var n = nights();
     var extras = [].slice.call(f.querySelectorAll('input[name="extras"]:checked')).map(function (x) { return x.value; });
     var lines = [
       'Hello Pristine Residences, I’d like to check availability.',
@@ -710,13 +725,38 @@ fieldset.pr-f{border:0;margin:0;padding:0}
     ];
     if (f.email.value.trim()) lines.push('Email: ' + f.email.value.trim());
     if (f.note.value.trim()) lines.push('', 'Notes: ' + f.note.value.trim());
-    var body = lines.join('\n');
-    if (via === 'email') {
-      window.location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Reservation request: ' + nice(parse(ci.value)) + ', ' + n + (n === 1 ? ' night' : ' nights')) + '&body=' + encodeURIComponent(body);
-    } else {
-      var win = window.open('https://wa.me/' + PHONE + '?text=' + encodeURIComponent(body), '_blank', 'noopener');
-      if (!win) window.location.href = 'https://wa.me/' + PHONE + '?text=' + encodeURIComponent(body);
-    }
+    lines.shift(); lines.shift();
+    var stay = n + (n === 1 ? ' night' : ' nights') + ', ' + nice(parse(ci.value)) + ' to ' + nice(parse(co.value));
+    if (!ACCESS_KEY || ACCESS_KEY.indexOf('PASTE_') === 0) { err.textContent = 'Online booking isn’t switched on yet. Please call or WhatsApp +234 803 384 9365.'; return; }
+    var payload = {
+      access_key: ACCESS_KEY,
+      subject: 'Booking request: ' + f.name.value.trim() + ', ' + stay,
+      from_name: 'Pristine Residences website',
+      name: f.name.value.trim(),
+      phone: f.phone.value.trim(),
+      'Check-in': nice(parse(ci.value)),
+      'Check-out': nice(parse(co.value)),
+      Nights: String(n),
+      Villas: f.villas.value,
+      Guests: f.guests.value,
+      Extras: extras.length ? extras.join(', ') : 'None',
+      Notes: f.note.value.trim() || '—',
+      message: lines.join('\n')
+    };
+    if (f.email.value.trim()) { payload.email = f.email.value.trim(); payload.replyto = f.email.value.trim(); }
+    err.textContent = ''; send.disabled = true; send.textContent = 'Sending…';
+    fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok || !j.success) throw new Error(j.message || 'send'); }); })
+      .then(function () {
+        document.getElementById('pr-done-name').textContent = ', ' + f.name.value.trim().split(/\s+/)[0];
+        document.getElementById('pr-done-stay').textContent = stay + ' (' + f.villas.value + (f.villas.value === '1' ? ' villa' : ' villas') + ', ' + f.guests.value + (f.guests.value === '1' ? ' guest' : ' guests') + ')';
+        f.hidden = true; done.hidden = false; try { done.focus(); } catch (x) {}
+      })
+      .catch(function () { err.textContent = 'Sorry, your request didn’t go through.' + FALLBACK; })
+      .then(function () { send.disabled = false; send.textContent = 'Request booking'; });
+  });
+  document.getElementById('pr-again').addEventListener('click', function () {
+    f.reset(); update(); done.hidden = true; f.hidden = false; try { ci.focus(); } catch (x) {}
   });
 })();
 </script>
