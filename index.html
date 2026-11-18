@@ -122,7 +122,7 @@ button:focus-visible{outline:2px solid #c8102e;outline-offset:-3px}
 <style>
 /* reservations */
 #reserve{scroll-margin-top:0}
-.pr-menu li:nth-child(7){transition-delay:.46s}
+.pr-menu li:nth-child(7){transition-delay:.46s}.pr-menu li:nth-child(8){transition-delay:.52s}
 .pr-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 20px}
 .pr-f{display:flex;flex-direction:column;gap:8px;min-width:0}
 .pr-f.full{grid-column:1/-1}
@@ -150,6 +150,63 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 .pr-err{grid-column:1/-1;margin:0;color:#c8102e;font-size:15px}
 .pr-err:empty{display:none}
 .pr-form[hidden],#pr-done[hidden]{display:none!important}
+/* walkthrough lightbox */
+.pr-zoomable{position:relative;cursor:zoom-in}
+.pr-zoomable:focus-visible{outline:2px solid #c8102e;outline-offset:3px}
+.pr-zbadge{position:absolute;top:18px;right:18px;z-index:2;display:inline-flex;align-items:center;gap:8px;padding:8px 12px;background:rgba(11,31,71,.88);color:#f3eee5;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;opacity:0;transform:translateY(-4px);transition:opacity .4s var(--ease),transform .4s var(--ease);pointer-events:none}
+.pr-zoomable:hover .pr-zbadge,.pr-zoomable:focus-visible .pr-zbadge{opacity:1;transform:none}
+@media (hover:none){.pr-zbadge{opacity:1;transform:none;padding:7px 9px}.pr-zbadge span{display:none}}
+.pr-lb{--ease:cubic-bezier(.16,.84,.24,1);font-family:'Hanken Grotesk','Helvetica Neue',Arial,sans-serif;font-size:17px;line-height:1.6;position:fixed;inset:0;z-index:90;background:#06122b;color:#f3eee5;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .5s var(--ease),visibility 0s linear .5s}
+.pr-lb.is-open{opacity:1;visibility:visible;transition:opacity .5s var(--ease)}
+.pr-lb-top{position:absolute;left:0;right:0;top:0;z-index:3;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px clamp(16px,4vw,48px);background:linear-gradient(#06122bcc,#06122b00)}
+.pr-lb-t{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:#b9c3da}
+.pr-lb-t b{color:#f3eee5;font-weight:600}
+.pr-lb-ctl{display:flex;align-items:center;gap:6px}
+.pr-lb button{font-family:inherit;color:inherit;background:transparent;border:0;cursor:pointer}
+.pr-lb-ib{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:0 10px}
+.pr-lb-ib:hover{color:#ff6b74}
+.pr-lb-stage{position:relative;flex:1;overflow:hidden;touch-action:pan-y}
+.pr-lb-sl{position:absolute;inset:0;opacity:0;transition:opacity .9s var(--ease)}
+.pr-lb-sl.is-on{opacity:1}
+.pr-lb-img{position:absolute;inset:0;transform:scale(1.06);transition:transform 7s cubic-bezier(.2,.55,.3,1)}
+.pr-lb-sl.is-on .pr-lb-img{transform:scale(1)}
+.pr-lb-img img{width:100%;height:100%;object-fit:contain;display:block}
+.pr-lb-ph{position:absolute;inset:clamp(70px,9vh,96px) clamp(16px,6vw,96px);border:1px dashed #3b4d7a;background:#0b1f47;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:#7f8db0;line-height:1.7}
+.pr-lb-cap{position:absolute;right:clamp(16px,4vw,48px);bottom:clamp(20px,5vh,48px);z-index:2;box-sizing:border-box;width:min(440px,calc(100% - 32px));background:#f3eee5;color:#0d2866;padding:28px 30px 24px;box-shadow:0 30px 60px -20px rgba(0,0,0,.55)}
+.pr-lb-cap::before{content:"";position:absolute;left:0;top:0;height:3px;width:100%;background:#d9dceb}
+.pr-lb-bar{position:absolute;left:0;top:0;height:3px;width:100%;background:#c8102e;transform-origin:0 50%;transform:scaleX(0)}
+.pr-lb-in{transition:opacity .6s var(--ease),transform .7s var(--ease)}
+.pr-lb-cap.swap .pr-lb-in{opacity:0;transform:translateY(14px)}
+.pr-lb-meta{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+.pr-lb-n{font-family:'Newsreader',Georgia,serif;font-size:54px;line-height:.9}
+.pr-lb-n small{font-size:18px;color:#8a95b0;margin-left:4px}
+.pr-lb-fl{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:#56668c}
+.pr-lb-ey{font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:#c8102e;margin-bottom:6px}
+.pr-lb-h{margin:0 0 10px;font-family:'Newsreader',Georgia,serif;font-weight:400;font-size:clamp(26px,2.6vw,34px);line-height:1.1}
+.pr-lb-p{margin:0;font-size:15.5px;line-height:1.6}
+.pr-lb-specs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+.pr-lb-specs div{border-top:1px solid #0d2866;padding-top:6px;font-size:15px}
+.pr-lb-specs span{display:block;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#56668c}
+.pr-lb-nav{position:absolute;bottom:clamp(20px,5vh,48px);z-index:2;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(6,18,43,.55)!important;box-shadow:inset 0 0 0 1px rgba(243,238,229,.35);transition:background .3s,box-shadow .3s}
+.pr-lb-nav:hover{background:#c8102e!important;box-shadow:none}
+.pr-lb-prev{left:clamp(16px,4vw,48px)}.pr-lb-next{left:calc(clamp(16px,4vw,48px) + 68px)}
+.pr-lb-dots{display:flex;gap:6px;align-items:center}
+.pr-lb-dots button{width:26px;height:44px;padding:0;display:flex;align-items:center}
+.pr-lb-dots i{display:block;width:100%;height:2px;background:rgba(243,238,229,.3);transition:background .3s}
+.pr-lb-dots .is-on i{background:#e0202e}
+.pr-lb-dots button:hover i{background:#f3eee5}
+.pr-lb :focus-visible{outline:2px solid #ff6b74;outline-offset:2px}
+.pr-lb .pr-ico-play{display:none}.pr-lb .is-paused .pr-ico-pause{display:none}.pr-lb .is-paused .pr-ico-play{display:inline}
+@media (max-width:700px){
+  .pr-lb-dots{display:none}
+  .pr-lb-ph{inset:64px 16px auto;height:38vh}
+  .pr-lb-cap{left:0;right:0;bottom:0;width:100%;padding:22px 20px calc(18px + env(safe-area-inset-bottom));max-height:52vh;overflow-y:auto}
+  .pr-lb-n{font-size:40px}
+  .pr-lb-nav{top:calc(64px + 19vh);bottom:auto;width:44px;height:44px;margin-top:-22px}
+  .pr-lb-prev{left:24px}.pr-lb-next{left:auto;right:24px}
+  .pr-lb-img{bottom:auto;height:calc(100% - 46vh)}
+}
+@media (prefers-reduced-motion:reduce){.pr-lb-sl,.pr-lb-img,.pr-lb-in{transition:none!important}.pr-lb-img{transform:none!important}}
 #pr-send[disabled]{opacity:.6;cursor:progress}
 @media (max-width:560px){.pr-form{grid-template-columns:minmax(0,1fr)}.pr-acts button{width:100%;justify-content:center}}
 </style>
@@ -183,17 +240,17 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 <li><a class="pr-mlink" href="#prices" data-on="closeMenu" style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid #2c3f6b"><span class="pr-mn" style="font-family: 'Newsreader', Georgia, serif; font-size: 18px; color: #b9c3da">05</span><span><span class="pr-mt" style="display: block; font-family: 'Newsreader', Georgia, serif; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1">Rates &amp; booking</span><span style="display: block; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #b9c3da; margin-top: 6px">Tailored to your stay, ask for a quote</span></span></a></li>
 <li><a class="pr-mlink" href="#reserve" data-on="closeMenu" style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid #2c3f6b"><span class="pr-mn" style="font-family: 'Newsreader', Georgia, serif; font-size: 18px; color: #b9c3da">06</span><span><span class="pr-mt" style="display: block; font-family: 'Newsreader', Georgia, serif; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1">Reservations</span><span style="display: block; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #b9c3da; margin-top: 6px">Check your dates, request a stay</span></span></a></li>
 <li><a class="pr-mlink" href="#find-us" data-on="closeMenu" style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid #2c3f6b"><span class="pr-mn" style="font-family: 'Newsreader', Georgia, serif; font-size: 18px; color: #b9c3da">07</span><span><span class="pr-mt" style="display: block; font-family: 'Newsreader', Georgia, serif; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1">Find us</span><span style="display: block; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #b9c3da; margin-top: 6px">Plot 214, Oduduwa Crescent, Ikeja G.R.A.</span></span></a></li>
+<li><a class="pr-mlink" href="guide.html" style="display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid #2c3f6b"><span class="pr-mn" style="font-family: 'Newsreader', Georgia, serif; font-size: 18px; color: #b9c3da">08</span><span><span class="pr-mt" style="display: block; font-family: 'Newsreader', Georgia, serif; font-size: clamp(30px, 3.6vw, 46px); line-height: 1.1">Lagos guide</span><span style="display: block; font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase; color: #b9c3da; margin-top: 6px">What's on, where to eat and shop</span></span></a></li>
 </ol>
 <div style="flex: 1 1 300px; min-width: 0; display: flex; flex-direction: column; gap: 22px">
 <div style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #b9c3da">Come and stay</div>
 <p style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-size: 26px; line-height: 1.3; color: #f3eee5">Tell us your dates. We'll have the power on, the Wi-Fi up and the beds made.</p>
 <div style="display: flex; flex-direction: column; gap: 6px; font-size: 16px; color: #dfe3ee">
-<a href="tel:+2348033849365">+234 803 384 9365</a>
 <a href="tel:+2347074300891">+234 707 430 0891</a>
 <a href="mailto:pristineresidencesikeja@gmail.com" style="overflow-wrap: anywhere">pristineresidencesikeja@gmail.com</a>
 </div>
 <a class="pr-dl" href="Pristine-Residences-Brochure.pdf" target="_blank" rel="noopener" data-on="download" style="align-self: flex-start; min-height: 44px; display: inline-flex; align-items: center; gap: 10px; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: #f3eee5"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M4.5 7 8 10.5 11.5 7M2.5 13.5h11"></path></svg>Download the brochure</a>
-<a class="pr-fill pr-fill-l" href="https://wa.me/2348033849365" target="_blank" rel="noopener" style="align-self: flex-start; min-height: 52px; display: inline-flex; align-items: center; padding: 0 28px; background: #f3eee5; color: #0b1f47; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Message us on WhatsApp</a>
+<a class="pr-fill pr-fill-l" href="https://wa.me/2347074300891" target="_blank" rel="noopener" style="align-self: flex-start; min-height: 52px; display: inline-flex; align-items: center; padding: 0 28px; background: #f3eee5; color: #0b1f47; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Message us on WhatsApp</a>
 </div>
 </div>
 <div style="font-family: 'Newsreader', Georgia, serif; font-style: italic; font-size: 24px; color: #c9d1e4">Check in. Switch off.</div>
@@ -209,6 +266,7 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 <a class="pr-ul pr-hide-sm" href="#extras" style="min-height: 44px; display: inline-flex; align-items: center">Extras</a>
 <a class="pr-ul pr-hide-sm" href="#prices" style="min-height: 44px; display: inline-flex; align-items: center">Rates</a>
 <a class="pr-ul pr-hide-sm" href="#find-us" style="min-height: 44px; display: inline-flex; align-items: center">Find us</a>
+<a class="pr-ul pr-hide-sm" href="guide.html" style="min-height: 44px; display: inline-flex; align-items: center">Lagos guide</a>
 <a href="Pristine-Residences-Brochure.pdf" target="_blank" rel="noopener" class="pr-ul pr-dl pr-hide-sm" data-on="download" style="min-height: 44px; display: inline-flex; align-items: center; gap: 8px; color: #c8102e"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M4.5 7 8 10.5 11.5 7M2.5 13.5h11"></path></svg>Brochure</a>
 <button type="button" class="pr-idx" data-on="openMenu" aria-expanded="false" aria-label="Open the site index" style="min-height: 44px; display: inline-flex; align-items: center; gap: 10px; border: 0; background: transparent; color: inherit; font-family: inherit; font-size: inherit; font-weight: inherit; letter-spacing: inherit; text-transform: inherit; cursor: pointer; padding: 0"><span class="pr-ham" aria-hidden="true"></span>Index</button>
 <a class="pr-fill" href="#reserve" style="min-height: 44px; display: inline-flex; align-items: center; padding: 0 22px; background: #0d2866; color: #ffffff">Check dates</a>
@@ -384,7 +442,7 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 <!-- EXTRAS -->
 <section id="extras" style="background: #0b1f47; color: #f3eee5">
 <div style="max-width: 1280px; margin: 0 auto; padding: clamp(56px, 8vw, 112px) clamp(20px, 5vw, 80px)">
-<div class="pr-rv" style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #b9c3da; margin-bottom: 20px">07 – 09 · The extras</div>
+<div class="pr-rv" style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #b9c3da; margin-bottom: 20px">07 – 11 · The extras</div>
 <h2 class="pr-rv" style="margin: 0 0 64px; max-width: 12em; font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: clamp(40px, 5.4vw, 76px); line-height: 1.03; letter-spacing: -0.012em">And that's before we've shown you the extras.</h2>
 <div class="pr-stag" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 56px 32px">
 
@@ -411,9 +469,17 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 
 <article class="pr-rv pr-card" style="display: flex; flex-direction: column; gap: 14px; min-width: 0">
 <div class="pr-wipe" style="height: 200px; background: #1b2d57; padding: 10px; box-sizing: border-box; display: flex"><div class="pr-ph" style="flex: 1; border: 1px dashed #4a5c88; display: flex; align-items: flex-end; padding: 14px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: #c9d1e4; line-height: 1.5">Photo · The pool in the morning</div></div>
-<div style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #b9c3da">09 · Outside</div>
+<div style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #b9c3da">10 · Outside</div>
 <h3 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: 30px; line-height: 1.12">Then, the pool.</h3>
 <p style="margin: 0; color: #dfe3ee; font-size: 16px">A small swimming pool, shared between the villas. It's quiet, good for a morning swim or an afternoon with the children.</p>
+</article>
+
+<article class="pr-rv pr-card" style="display: flex; flex-direction: column; gap: 14px; min-width: 0">
+<div class="pr-wipe" style="height: 200px; background: #1b2d57; padding: 10px; box-sizing: border-box; display: flex"><div class="pr-ph" style="flex: 1; border: 1px dashed #4a5c88; position: relative; display: flex; align-items: flex-end; padding: 14px; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: #c9d1e4; line-height: 1.5"><div style="position: absolute; left: 16%; top: 26%; display: flex; align-items: center; letter-spacing: 0; text-transform: none; font-weight: 400"><div style="width: 11px; height: 11px; border-radius: 50%; background: #e0202e"></div><div style="width: 24px; height: 1px; background: #f3eee5"></div><div style="background: #f3eee5; color: #0b1f47; padding: 6px 10px; font-size: 12px"><span style="font-weight: 600">Concierge</span> · on request</div></div>Photo · Driver at arrivals, holding a Pristine sign</div></div>
+<div style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #b9c3da">11 · Concierge</div>
+<h3 style="margin: 0; font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: 30px; line-height: 1.12">Anything else? Just ask.</h3>
+<p style="margin: 0; color: #dfe3ee; font-size: 16px">Airport pickup, a driver for the day, a local SIM card waiting for you, groceries in the fridge before you land, tours, tailors, hair and nails. Tell us what you need and we'll arrange it.</p>
+<a class="pr-ul" href="#reserve" style="align-self: flex-start; min-height: 44px; display: inline-flex; align-items: center; gap: 8px; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; color: #f3eee5">Add to your booking<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h8M7.5 3.5 11 7l-3.5 3.5"/></svg></a>
 </article>
 
 </div>
@@ -455,14 +521,15 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 <div style="flex: 1 1 400px; min-width: 0">
 <div class="pr-rv" style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #c8102e; margin-bottom: 16px">Rates</div>
 <h2 class="pr-rv" style="margin: 0 0 24px; font-family: 'Newsreader', Georgia, serif; font-weight: 400; font-size: clamp(36px, 4.2vw, 56px); line-height: 1.06; letter-spacing: -0.01em">Tailored to your stay.</h2>
-<p class="pr-rv" style="margin: 0 0 28px; max-width: 32em">Rates depend on how long you stay and the extras you choose. Call or WhatsApp <a href="https://wa.me/2348033849365" target="_blank" rel="noopener" style="white-space: nowrap; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px">+234 803 384 9365</a> for a quote.</p>
+<p class="pr-rv" style="margin: 0 0 28px; max-width: 32em">Rates depend on how long you stay and the extras you choose. Staying <b style="font-weight: 600">one month or longer</b>? Call or WhatsApp <a href="https://wa.me/2347074300891" target="_blank" rel="noopener" style="white-space: nowrap; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px">+234 707 430 0891</a> for a long-stay quote.</p>
 <div class="pr-rv" style="display: flex; flex-wrap: wrap; gap: 14px; padding-bottom: 32px; border-bottom: 1px solid #0d2866">
-<a class="pr-fill" href="https://wa.me/2348033849365" target="_blank" rel="noopener" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 28px; background: #0d2866; color: #ffffff; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Ask for a quote</a>
+<a class="pr-fill" href="https://wa.me/2347074300891?text=Hello%20Pristine%20Residences%2C%20I%27d%20like%20a%20quote%20for%20a%20stay%20of%20one%20month%20or%20longer." target="_blank" rel="noopener" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 28px; background: #0d2866; color: #ffffff; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Ask for a quote · 1 month+</a>
+<a class="pr-fill pr-fill-o" href="#reserve" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 28px; background: transparent; color: #0d2866; box-shadow: inset 0 0 0 1px #0d2866; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Shorter stay? Check dates</a>
 </div>
 <div style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; color: #56668c; margin: 36px 0 12px">Included in every rate</div>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 6px 32px"><div>Constant power: two generators, inverter</div><div>24-hour Wi-Fi</div><div>Full DSTV bouquet</div><div>Housekeeping</div><div>Parking and security</div><div>Gym, pool and shared spaces</div></div>
 <div style="font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; color: #56668c; margin: 28px 0 12px">Optional extras</div>
-<div>Private cook · Catering</div>
+<div>Private cook · Catering · <a href="#extras" style="text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px">Concierge</a> (airport pickup, driver, SIM card, groceries, tours and more)</div>
 </div>
 
 <div style="flex: 1 1 400px; min-width: 0">
@@ -474,7 +541,7 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 <li class="pr-rv" style="display: flex; gap: 28px; padding: 20px 0; border-bottom: 1px solid #0d2866"><div style="flex: 0 0 44px; font-family: 'Newsreader', Georgia, serif; font-size: 48px; line-height: 1">3</div><div><div style="font-weight: 600; font-size: 19px">Confirm</div><div>Pay a deposit to secure the villa.</div></div></li>
 <li class="pr-rv" style="display: flex; gap: 28px; padding: 20px 0; border-bottom: 1px solid #0d2866"><div style="flex: 0 0 44px; font-family: 'Newsreader', Georgia, serif; font-size: 48px; line-height: 1">4</div><div><div style="font-weight: 600; font-size: 19px">Arrive</div><div>Power on, Wi-Fi up, beds made.</div></div></li>
 </ol>
-<p class="pr-rv" style="margin: 36px 0 0; font-family: 'Newsreader', Georgia, serif; font-size: 26px; line-height: 1.3">Questions first? Call or WhatsApp <a href="https://wa.me/2348033849365" target="_blank" rel="noopener" style="white-space: nowrap; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px">+234 803 384 9365</a>.</p>
+<p class="pr-rv" style="margin: 36px 0 0; font-family: 'Newsreader', Georgia, serif; font-size: 26px; line-height: 1.3">Questions first? Call or WhatsApp <a href="https://wa.me/2347074300891" target="_blank" rel="noopener" style="white-space: nowrap; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px">+234 707 430 0891</a>.</p>
 </div>
 </div>
 </section>
@@ -500,6 +567,15 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 <label class="pr-chk"><input type="checkbox" name="extras" value="Catering"><span>Catering</span></label>
 </div>
 </fieldset>
+<fieldset class="pr-f full"><legend style="margin-bottom: 8px; padding: 0">Concierge <span class="opt">(optional, we'll confirm details and costs)</span></legend>
+<div class="pr-chks">
+<label class="pr-chk"><input type="checkbox" name="extras" value="Airport pickup"><span>Airport pickup</span></label>
+<label class="pr-chk"><input type="checkbox" name="extras" value="Driver"><span>Driver</span></label>
+<label class="pr-chk"><input type="checkbox" name="extras" value="Local SIM card"><span>Local SIM card</span></label>
+<label class="pr-chk"><input type="checkbox" name="extras" value="Groceries before arrival"><span>Groceries before arrival</span></label>
+<label class="pr-chk"><input type="checkbox" name="extras" value="Lagos tour"><span>Lagos tour</span></label>
+<label class="pr-chk"><input type="checkbox" name="extras" value="Tailor, hair or nails"><span>Tailor, hair or nails</span></label></div>
+</fieldset>
 <div class="pr-f"><label for="pr-name">Full name</label><input class="pr-in" type="text" id="pr-name" name="name" autocomplete="name" required></div>
 <div class="pr-f"><label for="pr-phone">Phone</label><input class="pr-in" type="tel" id="pr-phone" name="phone" autocomplete="tel" required></div>
 <div class="pr-f full"><label for="pr-email">Email <span class="opt">(optional)</span></label><input class="pr-in" type="email" id="pr-email" name="email" autocomplete="email"></div>
@@ -516,7 +592,7 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 <div style="font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600; color: #ff6b74">Request received</div>
 <div style="font-family: 'Newsreader', Georgia, serif; font-size: clamp(30px, 3.4vw, 44px); line-height: 1.1">Thank you<span id="pr-done-name"></span>.</div>
 <p style="margin: 0; max-width: 30em">We've received your request for <b id="pr-done-stay" style="font-weight: 600"></b>. We'll confirm availability and your quote by phone or email.</p>
-<p style="margin: 0; font-size: 15px; color: #b9c3da">Need us sooner? Call or WhatsApp <a href="https://wa.me/2348033849365" target="_blank" rel="noopener" style="white-space: nowrap; text-decoration: underline; text-underline-offset: 4px">+234 803 384 9365</a>.</p>
+<p style="margin: 0; font-size: 15px; color: #b9c3da">Need us sooner? Call or WhatsApp <a href="https://wa.me/2347074300891" target="_blank" rel="noopener" style="white-space: nowrap; text-decoration: underline; text-underline-offset: 4px">+234 707 430 0891</a>.</p>
 <button type="button" id="pr-again" class="pr-ul" style="align-self: flex-start; min-height: 44px; border: 0; background: transparent; color: #f3eee5; font-family: inherit; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600; cursor: pointer; padding: 0">Make another request</button>
 </div>
 </div>
@@ -545,7 +621,7 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 <div style="display: flex; flex-wrap: wrap; gap: 4px 24px; padding: 16px 0; border-bottom: 1px solid #3b4d7a"><div style="flex: 0 0 140px; font-size: 11.5px; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 600; color: #b9c3da; padding-top: 4px">Brochure</div><a href="Pristine-Residences-Brochure.pdf" target="_blank" rel="noopener" data-on="download" style="display: inline-flex; align-items: center; gap: 8px; text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M4.5 7 8 10.5 11.5 7M2.5 13.5h11"></path></svg>Download the PDF (1.7 MB)</a></div>
 </div>
 <div style="display: flex; flex-wrap: wrap; gap: 14px">
-<a class="pr-fill pr-fill-l" href="https://wa.me/2348033849365" target="_blank" rel="noopener" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 28px; background: #f3eee5; color: #0b1f47; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Message us on WhatsApp</a>
+<a class="pr-fill pr-fill-l" href="https://wa.me/2347074300891" target="_blank" rel="noopener" style="min-height: 52px; display: inline-flex; align-items: center; padding: 0 28px; background: #f3eee5; color: #0b1f47; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 600">Message us on WhatsApp</a>
 </div>
 <div style="margin-top: auto; padding-top: 24px">
 <div style="display: flex; align-items: center"><div style="flex: 1; height: 1px; background: #f3eee5"></div><div style="width: 14px; height: 14px; border-radius: 50%; background: #e0202e"></div></div>
@@ -562,6 +638,7 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 <a class="pr-ul" href="#villa" style="min-height: 44px; display: inline-flex; align-items: center">The villa</a>
 <a class="pr-ul" href="#prices" style="min-height: 44px; display: inline-flex; align-items: center">Rates</a>
 <a class="pr-ul" href="Pristine-Residences-Brochure.pdf" target="_blank" rel="noopener" data-on="download" style="min-height: 44px; display: inline-flex; align-items: center">Download brochure</a>
+<a class="pr-ul" href="guide.html" style="min-height: 44px; display: inline-flex; align-items: center">Lagos guide</a>
 <a class="pr-ul" href="#top" style="min-height: 44px; display: inline-flex; align-items: center">Back to top</a>
 </div>
 </div>
@@ -629,7 +706,13 @@ fieldset.pr-f{border:0;margin:0;padding:0}
     function revealAll() { els.forEach(reveal); }
     var io = null;
     if (reduce || !('IntersectionObserver' in w)) revealAll();
-    else { io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } }); }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' }); els.forEach(function (x) { io.observe(x); }); }
+    else {
+      io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); } }); }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      els.forEach(function (x) { if (!x.classList.contains('pr-wipe')) io.observe(x); });
+      /* a wipe starts clipped to 1px, so the browser never sees it as visible: watch its parent instead */
+      var io2 = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { [].forEach.call(e.target.children, function (k) { if (k.classList.contains('pr-wipe')) reveal(k); }); io2.unobserve(e.target); } }); }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+      $$('.pr-wipe').forEach(function (x) { if (x.parentElement) io2.observe(x.parentElement); });
+    }
 
     var prog = d.querySelector('.pr-prog'), phs = $$('.pr-wipe .pr-ph');
     var canPx = !reduce && w.matchMedia('(min-width: 800px)').matches, lastY = 0, raf = 0;
@@ -666,10 +749,139 @@ fieldset.pr-f{border:0;margin:0;padding:0}
 })();
 </script>
 <script>
+/* walkthrough: full-screen gallery of the villa cards */
+(function () {
+  var d = document, w = window;
+  var cards = [].slice.call(d.querySelectorAll('#villa .pr-card, #extras .pr-card')); if (!cards.length) return;
+  var reduce = false; try { reduce = w.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+  var EVERY = 7000;
+  function txt(el) { return el ? el.textContent.trim() : ''; }
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function ownText(el) { return el ? [].filter.call(el.childNodes, function (n) { return n.nodeType === 3; }).map(function (n) { return n.textContent; }).join(' ').trim() : ''; }
+  var items = cards.map(function (c, i) {
+    var extra = !!c.closest('#extras');
+    var ph = c.querySelector('.pr-ph'), img = ph && ph.querySelector('img'), h = c.querySelector('h3');
+    var eyRaw = txt(h && h.previousElementSibling), m = eyRaw.match(/^(\d+)\s*·\s*(.+)$/);
+    var specs;
+    if (extra) {
+      var tag = ph && ph.querySelector('div[style*="padding: 6px 10px"]'), lab = tag && tag.querySelector('span');
+      specs = tag ? [[txt(lab), txt(tag).replace(txt(lab), '').replace(/^\s*·\s*/, '')]] : [];
+    } else {
+      specs = [].slice.call(c.querySelectorAll('div[style*="border-top: 1px solid #0d2866"]')).map(function (s) { return [txt(s.children[0]), txt(s.children[1])]; });
+    }
+    return {
+      group: extra ? 'the extras' : 'floor by floor',
+      img: img ? img.getAttribute('src') : '', alt: img ? (img.getAttribute('alt') || '') : '',
+      ph: (ownText(ph) || txt(ph)).replace(/^Photo\s*·\s*/, ''),
+      num: m ? m[1] : (txt(c.querySelector('div[style*="font-size: 68px"]')) || pad(i + 1)),
+      floor: extra ? 'The extras' : ((c.querySelector('[aria-label]') || { getAttribute: function () { return ''; } }).getAttribute('aria-label')),
+      ey: m ? m[2] : eyRaw, h: txt(h), p: txt(h && h.nextElementSibling), specs: specs
+    };
+  });
+  var N = items.length;
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  var lb = d.createElement('div');
+  lb.className = 'pr-lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true'); lb.setAttribute('aria-label', 'Walk through the villa'); lb.hidden = true;
+  lb.innerHTML =
+    '<div class="pr-lb-top"><div class="pr-lb-t">The villa · <b class="pr-lb-grp">floor by floor</b></div><div class="pr-lb-ctl">' +
+    '<div class="pr-lb-dots">' + items.map(function (it, i) { return '<button type="button" aria-label="Go to ' + esc(it.ey) + '"><i></i></button>'; }).join('') + '</div>' +
+    '<button type="button" class="pr-lb-ib pr-lb-play" aria-label="Pause slideshow"><svg class="pr-ico-pause" aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><rect x="2" y="1" width="2.6" height="10"/><rect x="7.4" y="1" width="2.6" height="10"/></svg><svg class="pr-ico-play" aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="currentColor"><path d="M2.5 1v10l8-5z"/></svg></button>' +
+    '<button type="button" class="pr-lb-ib pr-lb-close">Close<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M2 2l10 10M12 2 2 12"/></svg></button>' +
+    '</div></div>' +
+    '<div class="pr-lb-stage">' +
+    items.map(function (it) { return '<div class="pr-lb-sl" aria-hidden="true"><div class="pr-lb-img">' + (it.img ? '<img src="' + esc(it.img) + '" alt="' + esc(it.alt) + '">' : '<div class="pr-lb-ph">Photo coming soon<br>' + esc(it.ph) + '</div>') + '</div></div>'; }).join('') +
+    '<button type="button" class="pr-lb-nav pr-lb-prev" aria-label="Previous"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3 5 9l6 6"/></svg></button>' +
+    '<button type="button" class="pr-lb-nav pr-lb-next" aria-label="Next"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3l6 6-6 6"/></svg></button>' +
+    '<div class="pr-lb-cap"><div class="pr-lb-bar"></div><div class="pr-lb-in" aria-live="polite"></div></div>' +
+    '</div>';
+  d.body.appendChild(lb);
+
+  var slides = [].slice.call(lb.querySelectorAll('.pr-lb-sl')), dots = [].slice.call(lb.querySelectorAll('.pr-lb-dots button'));
+  var cap = lb.querySelector('.pr-lb-cap'), capIn = lb.querySelector('.pr-lb-in'), bar = lb.querySelector('.pr-lb-bar'), playBtn = lb.querySelector('.pr-lb-play');
+  var idx = 0, open = false, paused = reduce, t0 = 0, held = 0, raf = 0, lastFocus = null, swapT = 0;
+
+  function capHTML(it, i) {
+    return '<div class="pr-lb-meta"><div class="pr-lb-n">' + esc(it.num || pad(i + 1)) + '<small>/ ' + pad(N) + '</small></div><div class="pr-lb-fl">' + esc(it.floor) + '</div></div>' +
+      '<div class="pr-lb-ey">' + esc(it.ey) + '</div><h3 class="pr-lb-h">' + esc(it.h) + '</h3><p class="pr-lb-p">' + esc(it.p) + '</p>' +
+      (it.specs.length ? '<div class="pr-lb-specs">' + it.specs.map(function (s) { return '<div><span>' + esc(s[0]) + '</span>' + esc(s[1]) + '</div>'; }).join('') + '</div>' : '');
+  }
+  function show(n, instant) {
+    idx = ((n % N) + N) % N; t0 = performance.now(); held = 0;
+    slides.forEach(function (s, i) { s.classList.toggle('is-on', i === idx); s.setAttribute('aria-hidden', i === idx ? 'false' : 'true'); });
+    lb.querySelector('.pr-lb-grp').textContent = items[idx].group;
+    dots.forEach(function (b, i) { b.classList.toggle('is-on', i === idx); if (i === idx) b.setAttribute('aria-current', 'true'); else b.removeAttribute('aria-current'); });
+    clearTimeout(swapT);
+    if (instant || reduce) { capIn.innerHTML = capHTML(items[idx], idx); cap.classList.remove('swap'); cap.scrollTop = 0; return; }
+    cap.classList.add('swap');
+    swapT = setTimeout(function () { capIn.innerHTML = capHTML(items[idx], idx); cap.scrollTop = 0; cap.classList.remove('swap'); }, 260);
+  }
+  function setPaused(p) { if (p && !paused) held = performance.now() - t0; if (!p && paused) t0 = performance.now() - held; paused = p; playBtn.classList.toggle('is-paused', p); playBtn.setAttribute('aria-label', p ? 'Play slideshow' : 'Pause slideshow'); }
+  function tick(now) {
+    if (!open) return;
+    var p = paused ? held / EVERY : (now - t0) / EVERY;
+    bar.style.transform = 'scaleX(' + Math.min(1, p).toFixed(4) + ')';
+    if (!paused && p >= 1) show(idx + 1);
+    raf = requestAnimationFrame(tick);
+  }
+  function openAt(i) {
+    lastFocus = d.activeElement; lb.hidden = false; open = true;
+    show(i, true); setPaused(reduce);
+    d.body.style.overflow = 'hidden';
+    requestAnimationFrame(function () { lb.classList.add('is-open'); });
+    raf = requestAnimationFrame(tick);
+    setTimeout(function () { try { lb.querySelector('.pr-lb-close').focus({ preventScroll: true }); } catch (e) {} }, 50);
+  }
+  function close() {
+    if (!open) return; open = false; cancelAnimationFrame(raf);
+    lb.classList.remove('is-open'); d.body.style.overflow = '';
+    setTimeout(function () { if (!open) lb.hidden = true; }, 500);
+    try { if (lastFocus) lastFocus.focus({ preventScroll: true }); } catch (e) {}
+  }
+
+  lb.querySelector('.pr-lb-close').addEventListener('click', close);
+  lb.querySelector('.pr-lb-prev').addEventListener('click', function () { show(idx - 1); });
+  lb.querySelector('.pr-lb-next').addEventListener('click', function () { show(idx + 1); });
+  playBtn.addEventListener('click', function () { setPaused(!paused); });
+  dots.forEach(function (b, i) { b.addEventListener('click', function () { show(i); }); });
+  cap.addEventListener('mouseenter', function () { if (!paused) { setPaused(true); cap.dataset.hp = '1'; } });
+  cap.addEventListener('mouseleave', function () { if (cap.dataset.hp) { delete cap.dataset.hp; setPaused(false); } });
+  d.addEventListener('visibilitychange', function () { if (open && d.hidden && !paused) setPaused(true); });
+  lb.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+    else if (e.key === 'ArrowRight') { e.preventDefault(); show(idx + 1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); show(idx - 1); }
+    else if (e.key === 'Tab') {
+      var f = [].slice.call(lb.querySelectorAll('button')).filter(function (b) { return b.offsetParent !== null; });
+      if (!f.length) return; var first = f[0], last = f[f.length - 1];
+      if (e.shiftKey && d.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && d.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+  });
+  var sx = null, sy = 0, stage = lb.querySelector('.pr-lb-stage');
+  stage.addEventListener('touchstart', function (e) { if (e.target.closest('.pr-lb-cap')) return; sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+  stage.addEventListener('touchend', function (e) {
+    if (sx === null) return; var dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy; sx = null;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) show(idx + (dx < 0 ? 1 : -1));
+  }, { passive: true });
+
+  cards.forEach(function (c, i) {
+    var wp = c.querySelector('.pr-wipe'); if (!wp) return;
+    wp.classList.add('pr-zoomable'); wp.setAttribute('role', 'button'); wp.setAttribute('tabindex', '0');
+    wp.setAttribute('aria-label', 'View ' + items[i].ey + ' full screen');
+    var bdg = d.createElement('span'); bdg.className = 'pr-zbadge'; bdg.setAttribute('aria-hidden', 'true');
+    bdg.innerHTML = '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M7.5 1.5h3v3M4.5 10.5h-3v-3M10.5 1.5 7 5M1.5 10.5 5 7"/></svg><span>View full screen</span>';
+    wp.appendChild(bdg);
+    wp.addEventListener('click', function () { openAt(i); });
+    wp.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openAt(i); } });
+  });
+})();
+</script>
+<script>
 /* reservations form: builds a request and opens WhatsApp or email */
 (function () {
   var f = document.getElementById('pr-book'); if (!f) return;
-  var PHONE = '2348033849365', EMAIL = 'pristineresidencesikeja@gmail.com';
+  var PHONE = '2347074300891', EMAIL = 'pristineresidencesikeja@gmail.com';
   var ci = f.checkin, co = f.checkout, sum = document.getElementById('pr-sum'), err = document.getElementById('pr-err');
   function iso(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
   function parse(v) { if (!v) return null; var p = v.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
@@ -704,7 +916,7 @@ fieldset.pr-f{border:0;margin:0;padding:0}
   /* Web3Forms access key: requests are emailed to the address it was created for. */
   var ACCESS_KEY = '0f3e01d2-6c53-432c-ac57-98e78df9c9de';
   var send = document.getElementById('pr-send'), done = document.getElementById('pr-done');
-  var FALLBACK = ' Please try again, or call or WhatsApp +234 803 384 9365.';
+  var FALLBACK = ' Please try again, or call or WhatsApp +234 707 430 0891.';
   f.addEventListener('submit', function (e) {
     e.preventDefault();
     if (!check(true)) return;
@@ -727,7 +939,7 @@ fieldset.pr-f{border:0;margin:0;padding:0}
     if (f.note.value.trim()) lines.push('', 'Notes: ' + f.note.value.trim());
     lines.shift(); lines.shift();
     var stay = n + (n === 1 ? ' night' : ' nights') + ', ' + nice(parse(ci.value)) + ' to ' + nice(parse(co.value));
-    if (!ACCESS_KEY || ACCESS_KEY.indexOf('PASTE_') === 0) { err.textContent = 'Online booking isn’t switched on yet. Please call or WhatsApp +234 803 384 9365.'; return; }
+    if (!ACCESS_KEY || ACCESS_KEY.indexOf('PASTE_') === 0) { err.textContent = 'Online booking isn’t switched on yet. Please call or WhatsApp +234 707 430 0891.'; return; }
     var payload = {
       access_key: ACCESS_KEY,
       subject: 'Booking request: ' + f.name.value.trim() + ', ' + stay,
